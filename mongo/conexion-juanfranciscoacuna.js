@@ -28,7 +28,6 @@ client.connect((err, result) =>{
                     });
                 }
 
-
             //Actualizar Inventor
                 function updateInventor(){
                     return new Promise((resolve,reject) => {
@@ -49,7 +48,6 @@ client.connect((err, result) =>{
 
 async function asyncCall(){
 
-        //Insertar Inventor
             await insertInventor()
                 .then((result) => {
                     console.log(chalk.yellow("Inventor insertado correctamente"));
@@ -58,7 +56,6 @@ async function asyncCall(){
                     console.log("Error!",error);
                 }));
 
-        //Actualizar Inventor
             await updateInventor()
                 .then((result) => {
                     console.log(chalk.yellow("Inventor editado correctamente"));
@@ -67,7 +64,6 @@ async function asyncCall(){
                     console.log("Error!",error);
                 }));           
 
-        //Borrar Inventor
             await deleteInventor()
                 .then((result) => {
                     console.log(chalk.yellow("Inventor eliminado correctamente"));
