@@ -18,32 +18,37 @@ client.connect((err, result) =>{
                 year: 1987
             }
 
-//Definicion de las promesas
+//Definicion de las promesas para el CRUD
 
-            //Insert Inventor
-                const insertInventor = new Promise((resolve,reject) =>{
-                    resolve(collection.insertOne(nuevoInventor));
-                    reject("No se pudo insertar el inventor o ya existe en la coleccion");
-                });
+            //Insertar Inventor
+                function insertInventor(){
+                    return new Promise((resolve,reject) =>{
+                        resolve(collection.insertOne(nuevoInventor));
+                        reject("No se pudo insertar el inventor");
+                    });
+                }
 
-            //Update Inventor
-                const updateInventor = new Promise((resolve,reject) => {
-                    resolve(collection.updateOne({last:"Perez"}, {$set: {year:2000}}));
-                    reject("No se pudo actualizar inventor");
-                })
+            //Actualizar Inventor
+                function updateInventor(){
+                    return new Promise((resolve,reject) => {
+                          resolve(collection.updateOne({last:"Perez"}, {$set: {year:2000}}));
+                          reject("No se pudo actualizar inventor");
+                      });
+                }
 
-            //Delete Inventor
-                const deleteInventor = new Promise((resolve,reject) =>{
-                    resolve(collection.deleteOne({last:"Perez"}));
-                    reject("No se pudo eliminar inventor");
-                    });    
+            //Eliminar Inventor
+                  function deleteInventor(){
+                    return new Promise((resolve,reject) =>{
+                          resolve(collection.deleteOne({last:"Perez"}));
+                          reject("No se pudo eliminar inventor");
+                      });
+                  }
 
 //Invocacion de promesas que conforman el CRUD en funcion asyncCall()
 
 async function asyncCall(){
 
-            //Insert Inventor
-                insertInventor
+            await insertInventor()
                 .then((result) => {
                     console.log(chalk.yellow("Inventor insertado correctamente"));
                 })
@@ -51,8 +56,7 @@ async function asyncCall(){
                     console.log("Error!",error);
                 }));
 
-             //Update Inventor
-                updateInventor
+            await updateInventor()
                 .then((result) => {
                     console.log(chalk.yellow("Inventor editado correctamente"));
                 })
@@ -60,15 +64,15 @@ async function asyncCall(){
                     console.log("Error!",error);
                 }));           
 
-             //Delete Inventor
-                deleteInventor
+            await deleteInventor()
                 .then((result) => {
                     console.log(chalk.yellow("Inventor eliminado correctamente"));
                 })
                 .catch((error => {
                     console.log("Error!",error);
                 }));
-            }
+
+        }
 
 //Llamado a ejecucion de funcion asyncCall() que ejecutara el CRUD
 
